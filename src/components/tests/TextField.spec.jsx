@@ -31,3 +31,30 @@ it('sample test.', async () => {
    * 렌더링되는 DOM 구조가 올바르게 변경되었는지 확인 (O) -> 최종적으로 사용자가 보는 결과는 DOM
    */
 });
+
+describe('placeholder', () => {
+  it('기본 placeholder "텍스트를 입력해 주세요."가 노출된다.', async () => {
+    await render(<TextField />);
+
+    const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+
+    screen.debug();
+
+    expect(textInput).toBeInTheDocument();
+    // 단언(assertion) -> 테스트가 통과하기 위한 조건 -> 검증 실행
+
+    // +a) vitest는 toBeInTheDocument() 처럼 DOM과 관련된 Matcher는 존재하지 않는다!
+    // setupTest.js에서 jest-dom을 import하여 Matcher를 확장한 것임.
+    // toHaveClass(), toBeInTheDocument(), ... 를 통해 편리하게 단언할 수 있게 됨.
+  });
+
+  it('placeholder prop에 따라 placeholder가 변경 된다.', async () => {
+    await render(<TextField placeholder={'상품명을 입력해 주세요.'} />);
+
+    const textInput = screen.getByPlaceholderText('상품명을 입력해 주세요.');
+
+    screen.debug();
+
+    expect(textInput).toBeInTheDocument();
+  });
+});
