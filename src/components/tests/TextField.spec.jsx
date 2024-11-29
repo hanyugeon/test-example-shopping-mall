@@ -4,6 +4,20 @@ import React from 'react';
 import TextField from '@/components/TextField';
 import render from '@/utils/test/render';
 
+beforeEach(() => {
+  console.log('root - beforeEach');
+});
+beforeAll(() => {
+  console.log('root - beforeAll');
+});
+
+afterEach(() => {
+  console.log('root - afterEach');
+});
+afterAll(() => {
+  console.log('root - afterAll');
+});
+
 it('sample test.', async () => {
   /**
    * Arrange - 테스트를 위한 환경 만들기
@@ -33,12 +47,25 @@ it('sample test.', async () => {
 });
 
 describe('placeholder', () => {
+  // beforeEach(() => {
+  //   console.log('describe - beforeEach');
+  // });
+  // beforeAll(() => {
+  //   console.log('describe - beforeAll');
+  // });
+
+  // afterEach(() => {
+  //   console.log('describe - afterEach');
+  // });
+  // afterAll(() => {
+  //   console.log('describe - afterAll');
+  // });
   it('기본 placeholder "텍스트를 입력해 주세요."가 노출된다.', async () => {
     await render(<TextField />);
 
     const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
 
-    screen.debug();
+    // screen.debug();
 
     expect(textInput).toBeInTheDocument();
     // 단언(assertion) -> 테스트가 통과하기 위한 조건 -> 검증 실행
@@ -53,7 +80,7 @@ describe('placeholder', () => {
 
     const textInput = screen.getByPlaceholderText('상품명을 입력해 주세요.');
 
-    screen.debug();
+    // screen.debug();
 
     expect(textInput).toBeInTheDocument();
   });
