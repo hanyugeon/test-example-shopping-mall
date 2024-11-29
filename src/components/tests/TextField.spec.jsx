@@ -18,7 +18,11 @@ afterAll(() => {
   console.log('root - afterAll');
 });
 
-it('sample test.', async () => {
+// my-class란 class가 항상 적용된 컴포넌트를 렌더링
+beforeEach(async () => {
+  await render(<TextField className="my-class" />);
+});
+it('className을 prop으로 설정한 css class가 적용된다.', async () => {
   /**
    * Arrange - 테스트를 위한 환경 만들기
    * -> className을 지닌 컴포넌트 렌더링
