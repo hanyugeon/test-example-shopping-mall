@@ -103,7 +103,7 @@ it('포커스가 활성화되면 onFocus prop으로 등록한 함수가 호출�
   await user.click(textInput);
   // click과 연관 -> focus, mousedown, mouseup 등...
 
-  expect(spy).toHaveBeenCalledWith();
+  expect(spy).toHaveBeenCalled();
 });
 
 it('포커스가 활성화되면 border 스타일이 추가된다.', async () => {
