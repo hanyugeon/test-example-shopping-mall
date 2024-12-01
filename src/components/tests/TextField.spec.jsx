@@ -87,4 +87,21 @@ describe('placeholder', () => {
 
     expect(spy).toHaveBeenCalledWith('text');
   });
+
+  it('포커스가 활성화되면 onFocus prop으로 등록한 함수가 호출된다.', async () => {
+    // 포커스 활성화
+    // tab키를 활용해 Input 요소로 포커스 이동
+    // Input 요소를 클릭했을 때
+    // textInput.focus()로 직접 발생
+    const spy = vi.fn();
+
+    const { user } = await render(<TextField onFocus={spy} />);
+
+    const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+
+    await user.click(textInput);
+    // click과 연관 -> focus, mousedown, mouseup 등...
+
+    expect(spy).toHaveBeenCalledWith();
+  });
 });
