@@ -75,4 +75,16 @@ describe('placeholder', () => {
 
     expect(spy).toHaveBeenCalledWith('text');
   });
+
+  it('텍스트를 입력하면 onEnter prop으로 등록한 함수가 호출된다.', async () => {
+    const spy = vi.fn();
+
+    const { user } = await render(<TextField onEnter={spy} />);
+
+    const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+
+    await user.type(textInput, 'text{Enter}');
+
+    expect(spy).toHaveBeenCalledWith('text');
+  });
 });
