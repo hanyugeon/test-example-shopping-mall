@@ -4,24 +4,11 @@ import React from 'react';
 import TextField from '@/components/TextField';
 import render from '@/utils/test/render';
 
-beforeEach(() => {
-  console.log('root - beforeEach');
-});
-beforeAll(() => {
-  console.log('root - beforeAll');
-});
-
-afterEach(() => {
-  console.log('root - afterEach');
-});
-afterAll(() => {
-  console.log('root - afterAll');
-});
-
 // my-class란 class가 항상 적용된 컴포넌트를 렌더링
-beforeEach(async () => {
-  await render(<TextField className="my-class" />);
-});
+// beforeEach(async () => {
+//   await render(<TextField className="my-class" />);
+// });
+
 it('className을 prop으로 설정한 css class가 적용된다.', async () => {
   /**
    * Arrange - 테스트를 위한 환경 만들기
@@ -51,19 +38,6 @@ it('className을 prop으로 설정한 css class가 적용된다.', async () => {
 });
 
 describe('placeholder', () => {
-  // beforeEach(() => {
-  //   console.log('describe - beforeEach');
-  // });
-  // beforeAll(() => {
-  //   console.log('describe - beforeAll');
-  // });
-
-  // afterEach(() => {
-  //   console.log('describe - afterEach');
-  // });
-  // afterAll(() => {
-  //   console.log('describe - afterAll');
-  // });
   it('기본 placeholder "텍스트를 입력해 주세요."가 노출된다.', async () => {
     await render(<TextField />);
 
@@ -87,5 +61,18 @@ describe('placeholder', () => {
     // screen.debug();
 
     expect(textInput).toBeInTheDocument();
+  });
+
+  it('텍스트를 입력하면 onChange prop으로 등록한 함수가 호출된다.', async () => {
+    const spy = vi.fn(); // 스파이 함수
+    // 스파이 함수: 테스트 코드에서 특정 함수가 호출되었는지, 함수의 인자로 어떤것이 넘어왔는지 등 다양한 값들을 저장
+
+    const { user } = await render(<TextField onChange={spy} />);
+
+    const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+
+    await user.type(textInput, 'text');
+
+    expect(spy).toHaveBeenCalledWith('text');
   });
 });
