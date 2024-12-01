@@ -62,46 +62,59 @@ describe('placeholder', () => {
 
     expect(textInput).toBeInTheDocument();
   });
+});
 
-  it('텍스트를 입력하면 onChange prop으로 등록한 함수가 호출된다.', async () => {
-    const spy = vi.fn(); // 스파이 함수
-    // 스파이 함수: 테스트 코드에서 특정 함수가 호출되었는지, 함수의 인자로 어떤것이 넘어왔는지 등 다양한 값들을 저장
+it('텍스트를 입력하면 onChange prop으로 등록한 함수가 호출된다.', async () => {
+  const spy = vi.fn(); // 스파이 함수
+  // 스파이 함수: 테스트 코드에서 특정 함수가 호출되었는지, 함수의 인자로 어떤것이 넘어왔는지 등 다양한 값들을 저장
 
-    const { user } = await render(<TextField onChange={spy} />);
+  const { user } = await render(<TextField onChange={spy} />);
 
-    const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+  const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
 
-    await user.type(textInput, 'text');
+  await user.type(textInput, 'text');
 
-    expect(spy).toHaveBeenCalledWith('text');
-  });
+  expect(spy).toHaveBeenCalledWith('text');
+});
 
-  it('텍스트를 입력하면 onEnter prop으로 등록한 함수가 호출된다.', async () => {
-    const spy = vi.fn();
+it('텍스트를 입력하면 onEnter prop으로 등록한 함수가 호출된다.', async () => {
+  const spy = vi.fn();
 
-    const { user } = await render(<TextField onEnter={spy} />);
+  const { user } = await render(<TextField onEnter={spy} />);
 
-    const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+  const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
 
-    await user.type(textInput, 'text{Enter}');
+  await user.type(textInput, 'text{Enter}');
 
-    expect(spy).toHaveBeenCalledWith('text');
-  });
+  expect(spy).toHaveBeenCalledWith('text');
+});
 
-  it('포커스가 활성화되면 onFocus prop으로 등록한 함수가 호출된다.', async () => {
-    // 포커스 활성화
-    // tab키를 활용해 Input 요소로 포커스 이동
-    // Input 요소를 클릭했을 때
-    // textInput.focus()로 직접 발생
-    const spy = vi.fn();
+it('포커스가 활성화되면 onFocus prop으로 등록한 함수가 호출된다.', async () => {
+  // 포커스 활성화
+  // tab키를 활용해 Input 요소로 포커스 이동
+  // Input 요소를 클릭했을 때
+  // textInput.focus()로 직접 발생
+  const spy = vi.fn();
 
-    const { user } = await render(<TextField onFocus={spy} />);
+  const { user } = await render(<TextField onFocus={spy} />);
 
-    const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+  const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
 
-    await user.click(textInput);
-    // click과 연관 -> focus, mousedown, mouseup 등...
+  await user.click(textInput);
+  // click과 연관 -> focus, mousedown, mouseup 등...
 
-    expect(spy).toHaveBeenCalledWith();
+  expect(spy).toHaveBeenCalledWith();
+});
+
+it('포커스가 활성화되면 border 스타일이 추가된다.', async () => {
+  const { user } = await render(<TextField />);
+
+  const textInput = screen.getByPlaceholderText('텍스트를 입력해 주세요.');
+
+  await user.click(textInput);
+
+  expect(textInput).toHaveStyle({
+    borderWidth: 2,
+    borderColor: 'rgb(25, 118, 210)',
   });
 });
